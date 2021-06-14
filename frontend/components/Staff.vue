@@ -1,21 +1,78 @@
 <template>
   <div class="staff">
-   
-    Staff
+    <div>
+      <b-table striped hover :items="items" :fields="fields"></b-table>
+    </div>
 
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Staff',
   props: {
     msg: String
-  }
+  },
+  data() {
+
+      return {
+        // Note `isActive` is left out and will not appear in the rendered table
+        fields: [
+          {key : 'l_name', label : 'Nom'},
+          {key : 'f_name', label : 'Prénom'}, 
+          // {key : 'poste', label : '	Poste'}, 
+          // {key : 'email', label : 'E-mail'},  
+        ],
+
+        items: [
+       
+        ]
+      }
+    },
+
+
+  mounted () {
+    console.log("shitttttt", this.api_url+'membres/')
+    axios.get(this.api_url+'membres/')
+    .then((res) =>{
+      var is_active = true
+        res.data.forEach(e => {
+          this.items.push({
+            isActive : is_active,
+            l_name : e.l_name,
+            f_name : e.f_name
+          })
+          is_active = !is_active
+        });
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+  },
+
+  computed : {
+
+      auth_url() {
+          return this.$store.state.auth_url;
+      },
+
+      api_url() {
+          return this.$store.state.api_url;
+      },
+
+      auth_client() {
+          return this.$store.state.auth_client;
+      }
+  },
+
+  
+
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
