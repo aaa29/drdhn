@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Membre, Equipe, Project, Assignment, Role, Position
+from .models import Membre, Equipe, Project, Assignment, Role, Position, Axe, Paxe
 from django.contrib.auth.models import User
-from .serializers import MembreSerializer, EquipeSerializer, ProjectSerializer, AssignmentSerializer, UserSerializer, RoleSerializer, PositionSerializer
+from .serializers import MembreSerializer, EquipeSerializer, ProjectSerializer, AssignmentSerializer, UserSerializer, RoleSerializer, PositionSerializer, AxeSerializer, PaxeSerializer
 from rest_framework.decorators import action, parser_classes, api_view, permission_classes, authentication_classes
 
 from rest_framework.response import Response
@@ -13,6 +13,18 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class AxeViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = Axe.objects.all()
+    serializer_class = AxeSerializer
+
+
+class PaxeViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = Paxe.objects.all()
+    serializer_class = PaxeSerializer
 
 
 class PositionViewSet(viewsets.ModelViewSet):
@@ -56,13 +68,12 @@ class AssignmentViewSet(viewsets.ModelViewSet):
 def add(request, format=None):
 
     
-    # with open("temp.txt", "r", encoding="utf8") as f:
-    #     all_ = f.read().split('\n')
+    with open("temp.txt", "r", encoding="utf8") as f:
+        all_ = f.read().split('\n')
 
-    #     for line in all_:
-    #         line = line.split(',')[0].split()
-    #         membre = Membre(l_name=line[0], f_name=' '.join(line[1:]))
-    #         membre.save()
+        for line in all_:
+            axe = Axe(name=line, description=line)
+            axe.save()
     
 
     response = {'userinfo' : 'success'}

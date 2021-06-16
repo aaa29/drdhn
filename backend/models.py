@@ -6,6 +6,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Axe(models.Model):
+    name = models.CharField(max_length=300)
+    description = models.TextField()
+
+
 class Equipe(models.Model):
     name = models.CharField(max_length=300)
     Description = models.TextField()
@@ -17,15 +22,12 @@ class Position(models.Model):
     description = models.TextField()
 
 
+
 class Membre(models.Model):
     f_name = models.CharField(max_length=300)
     l_name = models.CharField(max_length=300)
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE, blank=True, null=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE, blank=True, null=True)
-
-
-
-
 
 
 
@@ -37,6 +39,13 @@ class Project(models.Model):
     chef = models.ForeignKey(Membre, on_delete=models.CASCADE, blank=True, null=True)
 
 
+#project axe class
+class Paxe(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
+    axe = models.ForeignKey(Axe, on_delete=models.CASCADE, blank=True, null=True)
+
+
+
 class Role(models.Model):
     name = models.CharField(max_length=300)
     description = models.TextField()
@@ -46,4 +55,7 @@ class Assignment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
     membre = models.ForeignKey(Membre, on_delete=models.CASCADE, blank=True, null=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=True, null=True)
+
+
+
 

@@ -1,4 +1,4 @@
-from .models import Membre, Equipe, Project, Assignment, Position, Role
+from .models import Membre, Equipe, Project, Assignment, Position, Role, Axe, Paxe
 from django.contrib.auth.models import User
 
 from rest_framework import generics, permissions, serializers
@@ -44,4 +44,15 @@ class RoleSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
+        fields = "__all__"
+
+
+class AxeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Axe
+        fields = "__all__"
+
+class PaxeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Paxe
         fields = "__all__"
